@@ -1,6 +1,26 @@
 <?php require"../includes/header.php";  ?>
 
-    <div class="hero-wrap js-fullheight" style="background-image: url('images/image_2.jpg');" data-stellar-background-ratio="0.5">
+<?php 
+  if(isset($_POST["submit"])){
+    if(empty($_POST["username"]) OR empty($_POST["email"]) OR empty($_POST["password"]) ){
+      echo"<script> alert('one or more inputs are mising')</script>";
+    }else{
+      $_username = $_POST["username"];
+      $_email = $_POST["email"];
+      $_password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+      
+      $insert = $conn->prepare("INSERT INTO users (username, email,mypassword) VALUES (:username, :email, :mypassword");
+
+      $insert->execute([
+        ":username" => $username,
+        ":email" => $email,
+        ":mypassword" => $password,
+      ]);
+    
+    }
+  }
+?>
+    <div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APPURL?>/images/image_2.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
